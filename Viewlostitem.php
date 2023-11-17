@@ -14,7 +14,7 @@ if ($conn->connect_error) {
 }
 
 // Retrieve lost items from the Items table
-$sql = "SELECT * FROM Items WHERE OwnerID IS NULL";
+$sql = "SELECT * FROM Items ";
 $result = $conn->query($sql);
 
 ?>
