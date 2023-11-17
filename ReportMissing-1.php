@@ -45,12 +45,8 @@ $conn->close();
 
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
     Item Name: <input type="text" name="item_name" required><br>
-    Description: <textarea name="description" required></textarea><br>
-    Category: <input type="text" name="category" required><br>
-    Found Location: <input type="text" name="found_location" required><br>
     Found Date: <input type="date" name="found_date" required><br>
-    <!-- You might want to use a session variable or other means to get the user's ID -->
-    Owner ID: <input type="text" name="owner_id" required><br>
+  
     <input type="submit" value="Report Item">
 </form>
 
