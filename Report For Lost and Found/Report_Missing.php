@@ -44,6 +44,7 @@ $conn->close();
 <h2>Report Missing Item</h2>
 
 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+    ItemID: <input type="text" name="item_id" readonly> <br>
     Item Name: <input type="text" name="item_name" required><br>
     Found Date: <input type="date" name="found_date" required><br>
   
