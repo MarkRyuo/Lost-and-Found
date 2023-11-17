@@ -23,18 +23,27 @@ $result = $conn->query($sql);
 <html>
 <head>
     <title>View Lost Items</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 8px;
+            text-align: left;
+        }
+    </style>
 </head>
 <body>
 
 <h2>Lost Items</h2>
 
 <?php
-// Debugging output: Display the actual SQL query being executed
-echo "SQL Query: " . $sql . "<br>";
-
 // Display lost items in a table
 if ($result->num_rows > 0) {
-    echo "<table border='1'>";
+    echo "<table>";
     echo "<tr>";
     echo "<th>Item ID</th>";
     echo "<th>Item Name</th>";
