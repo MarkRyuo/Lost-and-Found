@@ -44,7 +44,6 @@ $conn->close();
 
 </body>
 
-</script>
 <!-- JavaScript function to claim items -->
 <script>
     function claimItem(itemId) {
@@ -62,4 +61,6 @@ $conn->close();
             xhttp.send();
         }
     }
+</script>
 </html>
+
