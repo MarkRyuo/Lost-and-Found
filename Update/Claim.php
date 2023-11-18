@@ -1,3 +1,6 @@
+Claim 
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -29,7 +32,7 @@ if ($result->num_rows > 0) {
         echo "<td><input type='text' value='" . $row["ItemID"] . "' readonly></td>";
         echo "<td><input type='text' value='" . $row["ItemName"] . "' readonly></td>";
         echo "<td><input type='text' value='" . $row["FoundDate"] . "' readonly></td>";
-        echo "<td><button class='claimButton' onclick='claimItem(" . $row["ItemID"] . ")'>Claim</button></td>";
+        echo "<td><button class='deleteButton' onclick='deleteItem(" . $row["ItemID"] . ")'>Claim</button></td>";
         echo "</tr>";
     }
 
@@ -42,25 +45,24 @@ if ($result->num_rows > 0) {
 $conn->close();
 ?>
 
-</body>
-
-<!-- JavaScript function to claim items -->
+<!-- JavaScript function to delete items -->
 <script>
-    function claimItem(itemId) {
-        if (confirm("Are you sure you want to claim this item?")) {
-            // AJAX request to claim the item
+    function deleteItem(itemId) {
+        if (confirm("Are you sure you want to delete this item?")) {
+            // AJAX request to delete the item
             var xhttp = new XMLHttpRequest();
             xhttp.onreadystatechange = function() {
                 if (this.readyState == 4 && this.status == 200) {
                     var row = document.getElementById("item-" + itemId);
                     row.parentNode.removeChild(row);
-                    alert("Item claimed successfully!");
+                    alert("Item deleted successfully!");
                 }
             };
-            xhttp.open("GET", "Claim.php?id=" + itemId, true); // Replace with the path to your PHP claim script
+            xhttp.open("GET", "delete_item.php?id=" + itemId, true); // Replace with the path to your PHP delete script
             xhttp.send();
         }
     }
 </script>
-</html>
 
+</body>
+</html>
