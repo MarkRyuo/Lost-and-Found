@@ -1,42 +1,41 @@
 <?php
-// delete_item.php
+// database.php file containing database connection
+require_once("database.php");
 
-// Check if the item ID is provided
-if (isset($_GET['id'])) {
+// Check if the ID is provided via GET request
+if (isset($_GET['id']) && !empty($_GET['id'])) {
     $itemId = $_GET['id'];
 
-    // Include the database connection
-    require_once("database.php");
+    // SQL query to delete the item from the database
+    $sql = "DELETE FROM items WHERE ItemID = $itemId"; // Replace 'items' with your actual table name
 
-    // Fetch the item details before deletion
-    $selectSql = "SELECT * FROM items WHERE ItemID = ?";
-    $selectStmt = $conn->prepare($selectSql);
-    $selectStmt->bind_param("i", $itemId);
-    $selectStmt->execute();
-    $selectedItem = $selectStmt->get_result()->fetch_assoc();
-    $selectStmt->close();
-
-    // Insert the deleted item into another table or log file
-    $insertSql = "INSERT INTO deleted_items (ItemID, ItemName, FoundDate) VALUES (?, ?, ?)";
-    $insertStmt = $conn->prepare($insertSql);
-    $insertStmt->bind_param("iss", $selectedItem['ItemID'], $selectedItem['ItemName'], $selectedItem['FoundDate']);
-    $insertStmt->execute();
-    $insertStmt->close();
-
-    // Delete the item from the original table
-    $deleteSql = "DELETE FROM items WHERE ItemID = ?";
-    $deleteStmt = $conn->prepare($deleteSql);
-    $deleteStmt->bind_param("i", $itemId);
-    $deleteStmt->execute();
-    $deleteStmt->close();
-
-    // Close the database connection
-    $conn->close();
-
-    // Send a response (you can customize this based on your needs)
-    echo "Item deleted successfully!";
+    // Execute the delete query
+    if ($conn->query($sql) === TRUE) {
+        // Return a success response (HTTP status 200 OK)
+        http_response_code(200);
+        echo "Item deleted successfully";
+    } else {
+        // Return an error response (HTTP status 500 Internal Server Error)
+        http_response_code(500);
+        echo "Error deleting item: " . $conn->error;
+    }
 } else {
-    // If item ID is not provided in the request
-    echo "Item ID not provided.";
+    // Return a bad request response (HTTP status 400 Bad Request)
+    http_response_code(400);
+    echo "Invalid request";
 }
+
+$sqlRenumber = "SET @count = 0;
+                UPDATE items SET ItemID = @count:= @count + 1;
+                ALTER TABLE items AUTO_INCREMENT = 1;";
+if ($conn->multi_query($sqlRenumber)) {
+    do {
+        // Ensure all results are fetched
+    } while ($conn->more_results() && $conn->next_result());
+} else {
+    echo "Error renumbering ItemIDs: " . $conn->error;
+}
+
+// Close the database connection
+$conn->close();
 ?>

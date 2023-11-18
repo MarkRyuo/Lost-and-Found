@@ -1,6 +1,3 @@
-Claim 
-
-
 <!DOCTYPE html>
 <html>
 <head>
