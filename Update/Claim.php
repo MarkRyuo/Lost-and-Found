@@ -57,7 +57,7 @@ $conn->close();
                     alert("Item claimed successfully!");
                 }
             };
-            xhttp.open("GET", "claim_item.php?id=" + itemId, true); // Replace with the path to your PHP claim script
+            xhttp.open("GET", "Claim.php?id=" + itemId, true); // Replace with the path to your PHP claim script
             xhttp.send();
         }
     }
