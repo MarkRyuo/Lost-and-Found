@@ -8,7 +8,7 @@
 <h2>Claim View Lost Item</h2>
 
 <?php
-require_once("/Update/database.php");
+require_once("database.php");
 
 // Fetch lost items from the database
 $sql = "SELECT ItemID, ItemName, FoundDate FROM items"; // Replace 'items' with your actual table name
