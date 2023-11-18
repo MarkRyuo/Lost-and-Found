@@ -22,30 +22,9 @@ $result = $conn->query($sql);
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="/Report For Lost and Found/Viewlost.css">
     <title>View Lost Items</title>
-    <style>
-        .parent-Table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 20px;
-        }
 
-        .table-Header th {
-            border: 1px solid black;
-            padding: 8px;
-            text-align: left;
-        }
-
-        .table-Data td {
-            border: 1px solid black;
-            padding: 8px;
-        }
-
-        input[type="text"] {
-            width: 100%;
-            box-sizing: border-box;
-        }
-    </style>
 </head>
 <body>
 
@@ -54,6 +33,7 @@ $result = $conn->query($sql);
 <?php
 // Display lost items
 if ($result->num_rows > 0) {
+    
     echo "<table class='parent-Table'>";
     echo "<tr class='table-Header'>";
     echo "<th>Item ID</th>";
