@@ -42,6 +42,7 @@ if ($result->num_rows > 0) {
 $conn->close();
 ?>
 
+</body>
 <!-- JavaScript function to claim items -->
 <script>
     function claimItem(itemId) {
@@ -60,6 +61,4 @@ $conn->close();
         }
     }
 </script>
-
-</body>
 </html>
