@@ -21,7 +21,6 @@ if ($result->num_rows > 0) {
     echo "<th>Item ID</th>";
     echo "<th>Item Name</th>";
     echo "<th>Found Date</th>";
-    echo "<th>Action</th>";
     echo "</tr>";
 
     while ($row = $result->fetch_assoc()) {
