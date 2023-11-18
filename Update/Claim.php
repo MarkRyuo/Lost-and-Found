@@ -29,7 +29,7 @@ if ($result->num_rows > 0) {
         echo "<td><input type='text' value='" . $row["ItemID"] . "' readonly></td>";
         echo "<td><input type='text' value='" . $row["ItemName"] . "' readonly></td>";
         echo "<td><input type='text' value='" . $row["FoundDate"] . "' readonly></td>";
-        echo "<td><button class='deleteButton' onclick='deleteItem(" . $row["ItemID"] . ")'>Claim</button></td>";
+        echo "<td><button class='claimButton' onclick='claimItem(" . $row["ItemID"] . ")'>Claim</button></td>";
         echo "</tr>";
     }
 
@@ -42,15 +42,15 @@ if ($result->num_rows > 0) {
 $conn->close();
 ?>
 
-<!-- JavaScript function to delete items -->
+<!-- JavaScript function to claim items -->
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
-    function deleteItem(itemId) {
-        if (confirm("Are you sure you want to delete this item?")) {
-            // AJAX request to delete the item
+    function claimItem(itemId) {
+        if (confirm("Are you sure you want to claim this item?")) {
+            // AJAX request to claim the item
             $.ajax({
                 type: "GET",
-                url: "delete_item.php?id=" + itemId, // Replace with the path to your PHP delete script
+                url: "claim_item.php?id=" + itemId, // Replace with the path to your PHP claim script
                 success: function (response) {
                     if (response.status === "success") {
                         var row = document.getElementById("item-" + itemId);
