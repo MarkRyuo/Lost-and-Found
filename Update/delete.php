@@ -14,7 +14,7 @@ if (isset($_GET['id']) && !empty($_GET['id'])) {
         $row = $result->fetch_assoc();
 
         // Insert the item into deleted_items table
-        $insertSql = "INSERT INTO deleted_items (ItemID, ItemName, FoundDate, DeletionReason) 
+        $insertSql = "INSERT INTO deleted_items (ItemID, ItemName, FoundDate) 
                       VALUES ('$itemId', '{$row['ItemName']}', '{$row['FoundDate']}', 'User deleted')";
 
         if ($conn->query($insertSql) === TRUE) {
