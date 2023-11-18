@@ -51,7 +51,7 @@ $conn->close();
             // AJAX request to claim the item
             $.ajax({
                 type: "GET",
-                url: "claim_item.php?id=" + itemId, // Replace with the path to your PHP claim script
+                url: "Claim.php?id=" + itemId, // Replace with the path to your PHP claim script
                 success: function (response) {
                     if (response.status === "success") {
                         var row = document.getElementById("item-" + itemId);
