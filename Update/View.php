@@ -29,7 +29,6 @@ if ($result->num_rows > 0) {
         echo "<td><input type='text' value='" . $row["ItemID"] . "' readonly></td>";
         echo "<td><input type='text' value='" . $row["ItemName"] . "' readonly></td>";
         echo "<td><input type='text' value='" . $row["FoundDate"] . "' readonly></td>";
-        echo "<td><button class='claimButton' onclick='claimItem(" . $row["ItemID"] . ")'>Claim</button></td>";
         echo "</tr>";
     }
 
