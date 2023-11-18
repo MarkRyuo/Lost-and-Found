@@ -16,7 +16,6 @@ if ($conn->connect_error) {
 // Retrieve lost items from the Items table
 $sql = "SELECT * FROM Items ";
 $result = $conn->query($sql);
-
 ?>
 
 <!DOCTYPE html>
@@ -93,20 +92,30 @@ $conn->close();
     function removeItem(itemId) {
         var confirmation = confirm("Are you sure you want to remove this item?");
         if (confirmation) {
+            // Remove the item from the interface
             var itemElement = document.getElementById("item-" + itemId);
             if (itemElement) {
                 itemElement.remove();
             }
 
-            // You can add an AJAX call here to update the database and remove the item
-            // Example AJAX code:
-            // var xhr = new XMLHttpRequest();
-            // xhr.open("POST", "remove_item.php", true);
-            // xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-            // xhr.send("item_id=" + itemId);
+            // Post a message to notify the "View Lost Item" page
+            window.postMessage({ type: "removeItem", itemId: itemId }, "*");
+
+            // AJAX call to update the database and remove the item
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "remove_item.php", true);
+            xhr.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    // You can handle the response if needed
+                    console.log(xhr.responseText);
+                }
+            };
+            xhr.send("item_id=" + itemId);
         }
     }
 </script>
+
 
 </body>
 </html>

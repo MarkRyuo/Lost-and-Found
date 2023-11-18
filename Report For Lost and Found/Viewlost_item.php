@@ -33,7 +33,7 @@ $result = $conn->query($sql);
 <?php
 // Display lost items
 if ($result->num_rows > 0) {
-    
+
     echo "<table class='parent-Table'>";
     echo "<tr class='table-Header'>";
     echo "<th>Item ID</th>";
@@ -59,4 +59,19 @@ $conn->close();
 ?>
 
 </body>
+<script>
+    // Listen for messages from other windows
+    window.addEventListener("message", function(event) {
+        if (event.data.type === "removeItem") {
+            // Remove the item from the interface in the "View Lost Item" page
+            var itemId = event.data.itemId;
+            var itemElement = document.getElementById("item-" + itemId);
+            if (itemElement) {
+                itemElement.remove();
+            }
+
+            // You may want to add additional logic here if needed
+        }
+    });
+</script>
 </html>
