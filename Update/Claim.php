@@ -43,24 +43,20 @@ $conn->close();
 ?>
 
 <!-- JavaScript function to claim items -->
-<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 <script>
     function claimItem(itemId) {
         if (confirm("Are you sure you want to claim this item?")) {
             // AJAX request to claim the item
-            $.ajax({
-                type: "GET",
-                url: "claim_item.php?id=" + itemId, // Replace with the path to your PHP claim script
-                success: function (response) {
-                    if (response.status === "success") {
-                        var row = document.getElementById("item-" + itemId);
-                        row.parentNode.removeChild(row);
-                        alert("Item claimed successfully!");
-                    } else {
-                        alert("Error: " + response.message);
-                    }
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (this.readyState == 4 && this.status == 200) {
+                    var row = document.getElementById("item-" + itemId);
+                    row.parentNode.removeChild(row);
+                    alert("Item claimed successfully!");
                 }
-            });
+            };
+            xhttp.open("GET", "claim_item.php?id=" + itemId, true); // Replace with the path to your PHP claim script
+            xhttp.send();
         }
     }
 </script>
