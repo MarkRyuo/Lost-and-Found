@@ -8,5 +8,6 @@
 <body>
     <h2>Welcome Admin!</h2>
     <!-- Your admin system content goes here -->
+    <a href="/This id Final/Register.html">Register</a>
 </body>
 </html>
