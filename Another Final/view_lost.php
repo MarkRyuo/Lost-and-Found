@@ -26,7 +26,7 @@
     $result = $conn->query($sql);
 
     if ($result->num_rows > 0) {
-        echo "<table border='1'><tr><th>Item Number</th><th>Item Name</th><th>Date Found</th><th>Claim</th></tr>";
+        echo "<table border='1' id='lostItemsTable'><tr><th>Item Number</th><th>Item Name</th><th>Date Found</th><th>Claim</th></tr>";
         while($row = $result->fetch_assoc()) {
             echo "<tr><td>" . $row["item_number"] . "</td><td>" . $row["item_name"] . "</td><td>" . $row["date_found"] . "</td><td><button onclick='claimItem(" . $row["id"] . ")'>Claim</button></td></tr>";
         }
@@ -40,14 +40,23 @@
 
     <script>
         function claimItem(itemId) {
-            // Use JavaScript to send a request to the server to mark the item as claimed
             var xhr = new XMLHttpRequest();
             xhr.open("GET", "process_claim.php?id=" + itemId, true);
             xhr.send();
 
-            // Remove the row from the table
-            var row = document.querySelector("tr:has(td:contains('" + itemId + "'))");
-            row.parentNode.removeChild(row);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var response = JSON.parse(xhr.responseText);
+
+                    if (response.status === "success") {
+                        // Remove the row from the table
+                        var row = document.querySelector("tr:has(td:contains('" + itemId + "'))");
+                        row.parentNode.removeChild(row);
+                    } else {
+                        console.error("Error claiming item: " + response.message);
+                    }
+                }
+            };
         }
     </script>
 </body>

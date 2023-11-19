@@ -11,22 +11,22 @@ if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Process the form data
-$item_number = $_POST['item_number'];
-$item_name = $_POST['item_name'];
-$date_found = $_POST['date_found'];
+// Process the claim request
+$itemId = $_GET['id'];
+$dateClaimed = date('Y-m-d');
 
-// Insert data into the database
-$sql = "INSERT INTO lost_items (item_number, item_name, date_found) VALUES ('$item_number', '$item_name', '$date_found')";
+// Update the database to mark the item as claimed
+$sql = "UPDATE lost_items SET date_claimed = '$dateClaimed' WHERE id = $itemId";
 
 if ($conn->query($sql) === TRUE) {
-    echo "Item reported successfully";
+    echo json_encode(["status" => "success"]);
 } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+    echo json_encode(["status" => "error", "message" => $conn->error]);
 }
 
 $conn->close();
 ?>
+
 
 <script>
     function claimItem(itemId) {
