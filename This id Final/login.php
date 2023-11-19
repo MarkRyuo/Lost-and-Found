@@ -1,48 +1,34 @@
 <?php
 session_start();
+require_once('db.php');
 
-// Database connection
-$host = 'localhost';
-$user = 'root';
-$pass = '';
-$db = 'userdb';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
 
-$conn = new mysqli($host, $user, $pass, $db);
+    // Use prepared statements to prevent SQL injection
+    $stmt = $conn->prepare('SELECT * FROM users WHERE username = ? AND password = ?');
+    $stmt->bind_param('ss', $username, $password);
+    $stmt->execute();
+    $result = $stmt->get_result();
 
-if ($conn->connect_error) {
-    die("Connection failed: " . $conn->connect_error);
-}
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+        $_SESSION['username'] = $user['username'];
+        $_SESSION['role'] = $user['role'];
 
-// Function to sanitize input data
-function sanitize($input) {
-    global $conn;
-    return mysqli_real_escape_string($conn, $input);
-}
-
-// Handle login
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = sanitize($_POST['username']);
-    $password = md5(sanitize($_POST['password'])); // You should use more secure password hashing
-
-    $query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
-    $result = $conn->query($query);
-
-    if ($result->num_rows == 1) {
-        $row = $result->fetch_assoc();
-        $_SESSION['username'] = $row['username'];
-
-        // Redirect based on role
-        if ($row['role'] == 'admin') {
-            header("Location: admin_system.php");
-        } elseif ($row['role'] == 'security') {
-            header("Location: security_system.php");
-        } elseif ($row['role'] == 'student') {
-            header("Location: student_system.php?sr_code=" . $row['sr_code']);
+        // Redirect based on the user's role
+        if ($user['role'] === 'admin') {
+            header('Location: admin_system.php');
+        } else {
+            header('Location: security_system.php');
         }
+        exit;
     } else {
         echo "Invalid username or password";
     }
+
+    $stmt->close();
 }
 
-$conn->close();
 ?>
