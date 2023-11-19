@@ -10,7 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Use prepared statements to prevent SQL injection
     $stmt = $conn->prepare('INSERT INTO users (full_name, username, password, role) VALUES (?, ?, ?, ?)');
-    $stmt->bind_param('sssss', $full_name, $username, $password, $role);
+    $stmt->bind_param('ssss', $full_name, $username, $password, $role);
 
     if ($stmt->execute()) {
         echo "User registered successfully!";
