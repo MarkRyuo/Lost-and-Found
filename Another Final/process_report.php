@@ -12,20 +12,25 @@ if ($conn->connect_error) {
 }
 
 // Process the claim request
-$itemId = $_GET['id'];
-$dateClaimed = date('Y-m-d');
+if (isset($_GET['id'])) {
+    $itemId = $_GET['id'];
+    $dateClaimed = date('Y-m-d');
 
-// Update the database to mark the item as claimed
-$sql = "UPDATE lost_items SET date_claimed = '$dateClaimed' WHERE id = $itemId";
+    // Update the database to mark the item as claimed
+    $sql = "UPDATE lost_items SET date_claimed = '$dateClaimed' WHERE id = $itemId";
 
-if ($conn->query($sql) === TRUE) {
-    echo json_encode(["status" => "success"]);
+    if ($conn->query($sql) === TRUE) {
+        echo json_encode(["status" => "success"]);
+    } else {
+        echo json_encode(["status" => "error", "message" => $conn->error]);
+    }
 } else {
-    echo json_encode(["status" => "error", "message" => $conn->error]);
+    echo json_encode(["status" => "error", "message" => "No 'id' parameter provided"]);
 }
 
 $conn->close();
 ?>
+
 
 
 <script>
