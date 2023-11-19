@@ -11,9 +11,9 @@
     <?php
     // Connect to your MySQL database (replace with your actual credentials)
     $servername = "localhost";
-    $username = "your_username";
-    $password = "your_password";
-    $dbname = "your_database";
+    $username = "root";
+    $password = "";
+    $dbname = "db_nt3102";
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 

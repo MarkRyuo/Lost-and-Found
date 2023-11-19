@@ -27,3 +27,22 @@ if ($conn->query($sql) === TRUE) {
 
 $conn->close();
 ?>
+
+<script>
+    function claimItem(itemId) {
+        // Use JavaScript to send a request to the server to mark the item as claimed
+        var xhr = new XMLHttpRequest();
+        xhr.open("GET", "process_claim.php?id=" + itemId, true);
+        xhr.send();
+
+        // Remove the row from the table
+        var row = document.querySelector("tr:has(td:contains('" + itemId + "'))");
+        row.parentNode.removeChild(row);
+
+        // Reload the View Lost page after a brief delay
+        setTimeout(function() {
+            location.reload();
+        }, 1000);
+    }
+</script>
+
