@@ -1,3 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/Security Signin/Security.css">
+    <title>Security Signin | Lost and Found</title>
+</head>
+<body>
 <?php
 session_start();
 
@@ -19,11 +28,16 @@ if ($conn->connect_error) {
 }
 
 // Replace the following with your actual login authentication logic
-$input_username = $_POST['username'];
-$input_password = $_POST['password'];
+$input_username = $conn->real_escape_string($_POST['username']);
+$input_password = $conn->real_escape_string($_POST['password']);
 
-$sql = "SELECT Security_Id, Username, Password FROM security_table WHERE Username = '$input_username' AND Password = '$input_password'";
-$result = $conn->query($sql);
+$query = "SELECT * FROM security WHERE Username='$username' AND Password='$password'";
+$result = $conn->query($query);
+
+// Check for errors in the query execution
+if (!$result) {
+    die("Query failed: " . $conn->error);
+}
 
 if ($result->num_rows > 0) {
     // Login successful
@@ -41,3 +55,23 @@ if ($result->num_rows > 0) {
 // Close connection
 $conn->close();
 ?>
+    <div class="container">
+        <section class="sec-form">
+
+            
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" method="post" class="Form-Signin">
+                <h1>Signin</h1>
+                <label for="username">Username:</label>
+                <input type="text" name="username" id="username" required><br>
+
+                <label for="password">Password:</label>
+                <input type="password" name="password" id="password" required><br>
+
+                <input type="submit" value="Login" class="sign-btn">
+            </form>
+        </section>
+        <div class="blank">
+        </div>
+    </div>
+</body>
+</html>
