@@ -24,8 +24,14 @@ $fullName = $_SESSION['full_name'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin System</title>
+    <style>
+        .hatdog {
+            border: 1px solid black;
+        }
+    </style>
 </head>
 <body>
+    <form class="hatdog">
     <h2>Welcome Admin!</h2>
     <label for="username">Username:</label>
     <input type="text" id="username" name="username" value="<?php echo htmlspecialchars($username); ?>" readonly>
@@ -35,6 +41,7 @@ $fullName = $_SESSION['full_name'];
 
     <!-- Your admin system content goes here -->
     <a href="/This id Final/Register.html">Register</a>
+    </form>
 </body>
 </html>
 
