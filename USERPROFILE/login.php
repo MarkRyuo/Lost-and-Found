@@ -4,7 +4,7 @@ session_start();
 // Check if the form is submitted
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Include your database connection file
-    include_once("db_connection.php");
+    include_once("connection.php");
 
     // Get user input
     $username = mysqli_real_escape_string($conn, $_POST['username']);
@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if (password_verify($password, $row['password'])) {
             // Password is correct, set session and redirect to a secure page
             $_SESSION['user_id'] = $row['user_id'];
-            header("Location: secure_page.php");
+            header("Location: user_profile.php");
             exit();
         } else {
             // Password is incorrect
