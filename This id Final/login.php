@@ -16,6 +16,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $user = $result->fetch_assoc();
         $_SESSION['username'] = $user['username'];
         $_SESSION['role'] = $user['role'];
+        // Assuming you retrieve full name from the database query
+        $_SESSION['full_name'] = $user['full_name'];
+
 
         // Redirect based on the user's role
         if ($user['role'] === 'admin') {
